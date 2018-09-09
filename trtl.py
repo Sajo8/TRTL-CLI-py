@@ -159,7 +159,7 @@ try:
 			continue
 
 		elif inp == commands_7[0] or inp == commands_7[1]:
-			if checkpoints.git_conn1 and checkpoints.git_conn2:
+			if checkpoints.git_conn:
 				print("\nCheckpoints updated", checkpoints.updated, "hours ago.")
 				print("Download checkpoints from: http://checkpoints.info\n")
 			continue
