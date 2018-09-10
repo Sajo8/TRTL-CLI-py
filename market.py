@@ -36,12 +36,5 @@ if received_cmc:
     #add commas
     c_supply = "{:,.0f}".format(c_supply_r)
 
-    def market_values():
-        return mk_usd
-        return mk_ltc
-        return h24_change
-        return h24_vol
-        return c_supply
-
 else:
     print(Fore.RED + "\nCould not retrieve market stats." + Style.RESET_ALL)

@@ -123,44 +123,46 @@ try:
 				continue
 			
 			if len(ascii_inp) <2:
-				rand_number = randint(1, 10)
+				rand_number = randint(0, 9)
 
 				print(values(rand_number))
 				
 
 			elif ascii_inp[1] == 'flyingturtle':
-				print(values(1))
+				print(values(0))
 
 			elif ascii_inp[1] == 'happyturtle':
-				print(values(2))
+				print(values(1))
 
 			elif ascii_inp[1] == 'pineapple':
-				print(values(3))
+				print(values(2))
 
 			elif ascii_inp[1] == 'seaturtle':
-				print(values(4))				
+				print(values(3))				
 
 			elif ascii_inp[1] == 'snail':
-				print(values(5))				
+				print(values(4))				
 
 			elif ascii_inp[1] == 'swanson':
-				print(values(6))				
+				print(values(5))				
 
 			elif ascii_inp[1] == 'trtl':
-				print(values(7))
+				print(values(6))
 
 			elif ascii_inp[1] == 'turtle':
-				print(values(8))
+				print(values(7))
 
 			elif ascii_inp[1] == 'turtlefighter':
+				print(values(8))
+			elif ascii_inp[1] == 'walker':
 				print(values(9))
 			else:
-				print(values(10))
+				print(Fore.RED + f"\nCouldn't find ascii art specified: '{ascii_inp[1]}'" + Style.RESET_ALL)
 			continue
 
 		elif inp == commands_7[0] or inp == commands_7[1]:
 			if checkpoints.git_conn:
-				print("\nCheckpoints updated", checkpoints.updated, "hours ago.")
+				print(f"\nCheckpoints updated {checkpoints.updated} {checkpoints.h_t_s} ago.")
 				print("Download checkpoints from: http://checkpoints.info\n")
 			continue
 

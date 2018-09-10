@@ -30,11 +30,5 @@ if received_info:
 
     client_version = str(get_info['version'])
 
-    def return_values():
-        return height
-        return hashrate
-        return difficulty
-        return client_version
-
 else:
     print(Fore.RED + "\nCould not retrieve network stats." + Style.RESET_ALL)
