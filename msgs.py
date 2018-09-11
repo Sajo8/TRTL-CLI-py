@@ -1,3 +1,20 @@
+"""
+    Copyright (C) 2018 Sajo8
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
 from colorama import Fore, Style, init
 
 version = Fore.YELLOW + """\
@@ -30,7 +47,8 @@ help_msg = Fore.YELLOW + """\
 	ascii list|al  Displays a list of ASCII art
 	checkpoints|c  Gets latest checkpoint update
 	
-	exit|e         Quit the program
+	license|l      Show license information
+  exit|e         Quit the program
 """ + Style.RESET_ALL
 
 welcome_msg = Fore.GREEN + """\
@@ -41,6 +59,8 @@ welcome_msg = Fore.GREEN + """\
 
 	version|v  output the version number
 	help|h     output the help message
+ 	license|l  show license information
+
 """ + Style.RESET_ALL
 
 ascii_msg = Fore.YELLOW + """\
@@ -57,4 +77,12 @@ ascii_msg = Fore.YELLOW + """\
     turtle
     turtlefighter
     walker
+""" + Style.RESET_ALL
+
+license_msg = Fore.YELLOW + """\
+  
+  TRTL CLI py  Copyright (C) 2018 Sajo8
+  This program comes with ABSOLUTELY NO WARRANTY
+  This is free software, and you are welcome to redistribute it
+  under certain conditions
 """ + Style.RESET_ALL

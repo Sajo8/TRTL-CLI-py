@@ -1,3 +1,20 @@
+"""
+    Copyright (C) 2018 Sajo8
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
 import market #processes and returns info for commands `m` or `market`
 import network #processes and returns info for commands `n` or `network`
 import msgs #add the big stringz in a seperate file
@@ -22,12 +39,13 @@ commands_4 = ['price', 'p']
 commands_5 = ['ascii', 'a']
 commands_6 = ['ascii list', 'al']
 commands_7 = ['checkpoints', 'c']
+commands_8 = ['license', 'l']
 ascii_art =  ['flyingturtle', 'happyturtle', 'pineapple', 'seaturtle', 'snail', 'swanson', 'TRTL', 'turtle', 'turtlefighter', 'walker']
 
 
 
 if run1:
-	print(msgs.welcome_msg)
+	print(msgs.license_msg)
 	run1 = False
 
 try:
@@ -164,6 +182,10 @@ try:
 			if checkpoints.git_conn:
 				print(f"\nCheckpoints updated {checkpoints.updated} {checkpoints.h_t_s} ago.")
 				print("Download checkpoints from: http://checkpoints.info\n")
+			continue
+
+		elif inp == commands_8[0] or inp == commands_8[1]:
+			print(msgs.welcome_msg)
 			continue
 
 		elif inp == "":

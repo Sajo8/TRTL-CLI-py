@@ -1,11 +1,20 @@
-"""import urllib.request
-import json
-
-raw_json = urllib.request.urlopen("http://public.turtlenode.io:11898/getinfo").read()
-    
-
-get_info = json.loads(raw_json)
 """
+    Copyright (C) 2018 Sajo8
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
 import requests
 from colorama import Fore, Style, init
 init() 
