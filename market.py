@@ -15,43 +15,45 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import urllib.request
-import json
+import requests
 from colorama import Fore, Style, init
-init()
+init(autoreset=True)
 
-received_cmc = True
+def market():
+    try:
+        print(Fore.YELLOW + "\nReceiving market stats...")
 
-try:
-    urllib.request.urlopen("https://api.coinmarketcap.com/v2/ticker/2958/?convert=LTC").read()
-    r_mk_data = urllib.request.urlopen("https://api.coinmarketcap.com/v2/ticker/2958/?convert=LTC").read()
-    p_mk_data = json.loads(r_mk_data)
-except:
-    received_cmc = False
+        mk_data = requests.get("https://api.coinmarketcap.com/v2/ticker/2958/?convert=LTC").json()
 
-if received_cmc:
-    # value in usd
-    mk_usd_s = p_mk_data['data']['quotes']['USD']['price']
-    #convert to decimal notation
-    mk_usd = "{:.10f}".format(float(mk_usd_s))
+        # value in usd
+        mk_usd_s = mk_data['data']['quotes']['USD']['price']
+        #convert to decimal notation
+        mk_usd = "{:.10f}".format(float(mk_usd_s))
 
-    #value in ltc
-    mk_ltc_s = p_mk_data['data']['quotes']['LTC']['price']
-    #convert to decimal notation
-    mk_ltc = round(mk_ltc_s * 1e8, 2) # also round to 2 digits
+        #value in ltc
+        mk_ltc_s = mk_data['data']['quotes']['LTC']['price']
+        #convert to decimal notation
+        mk_ltc = str(round(mk_ltc_s * 1e8, 2)) # also round to 2 digits and convert to string
 
-    #24h price change
-    h24_change = p_mk_data['data']['quotes']['USD']['percent_change_24h']
+        #24h price change
+        h24_change = mk_data['data']['quotes']['USD']['percent_change_24h']
 
-    #24h volume
-    h24_vol_r = p_mk_data['data']['quotes']['USD']['volume_24h']
-    #add commas
-    h24_vol = "$" + "{:,.2f}".format(h24_vol_r)
+        #24h volume
+        h24_vol_r = mk_data['data']['quotes']['USD']['volume_24h']
+        #add commas
+        h24_vol = "$" + "{:,.2f}".format(h24_vol_r)
 
-    #circulating supply
-    c_supply_r = p_mk_data['data']['circulating_supply']
-    #add commas
-    c_supply = "{:,.0f}".format(c_supply_r)
+        #circulating supply
+        c_supply_r = mk_data['data']['circulating_supply']
+        #add commas
+        c_supply = "{:,.0f}".format(c_supply_r)
 
-else:
-    print(Fore.RED + "\nCould not retrieve market stats." + Style.RESET_ALL)
+
+        # return values
+        return {'received_info': True, 'mk_usd': mk_usd, 'mk_ltc': mk_ltc, 'h24_change': h24_change, 'h24_vol': h24_vol, 'c_supply': c_supply}
+
+    except:
+        return {'received_info': False}
+
+if __name__ == '__main__':
+    print('\n', market())

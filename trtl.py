@@ -1,206 +1,205 @@
 """
-    Copyright (C) 2018 Sajo8
+	Copyright (C) 2018 Sajo8
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import market #processes and returns info for commands `m` or `market`
-import network #processes and returns info for commands `n` or `network`
 import msgs #add the big stringz in a seperate file
-from askee import values #processes and returns info for commands `a` or `ascii`
-import checkpoints #for c or checkpoints
+from market import market #processes and returns info for commands `m` or `market`
+from network import network #processes and returns info for commands `n` or `network`
+from askee import askee #processes and returns info for commands `a` or `ascii`
+from checkpoints import checkpoints #for c or checkpoints
+from price import price #for p or price
 
-from random import randint
+from random import randint # for random ascii art
 from colorama import Fore, Style, init
-from termcolor import colored
-init() #init the colored stuff so it works on windows
+init(autoreset=True) #init the colored stuff so it works on windows. autoreset resets it back to set cmd color by default every time
 
 running = True # so that checks for input
 run1 = True #prints out on 1st launch if true
 
-options_1 = ['help', 'h']
-options_2 = ['version', 'v']
+help_options = ['help', 'h']
+version_options = ['version', 'v']
 
-commands_1 = ['market', 'm']
-commands_2 = ['supply', 's']
-commands_3 = ['network', 'n']
-commands_4 = ['price', 'p']
-commands_5 = ['ascii', 'a']
-commands_6 = ['ascii list', 'al']
-commands_7 = ['checkpoints', 'c']
-commands_8 = ['license', 'l']
-ascii_art =  ['flyingturtle', 'happyturtle', 'pineapple', 'seaturtle', 'snail', 'swanson', 'TRTL', 'turtle', 'turtlefighter', 'walker']
-
+market_commands = ['market', 'm']
+supply_commands = ['supply', 's']
+network_commands = ['network', 'n']
+price_commands = ['price', 'p']
+ascii_commands = ['ascii', 'a']
+ascii_list_commands = ['ascii list', 'al']
+checkpoints_commands = ['checkpoints', 'c']
+license_commands = ['license', 'l']
+exit_commands = ['exit', 'e']
 
 
 if run1:
 	print(msgs.license_msg)
+	print(msgs.welcome_msg)
 	run1 = False
 
 try:
 	while running:
 
 		inp = str(input('> ')).lower().strip()
+		split_input = inp.split()
+		if split_input != []:
+			command = split_input[0]
+			command_args = split_input[1:]
+		else:
+			continue
 
-		if inp == options_1[0] or inp == options_1[1]:
+		if command in help_options:
 			print(msgs.help_msg)
 			continue
 
-		elif inp == options_2[0] or inp == options_2[1]:
+		elif command in version_options:
 			print(msgs.version)
 			continue
 
-		elif inp == commands_1[0] or inp == commands_1[1]:
+		elif command in market_commands:
+			mk_info = market()
+			if mk_info['received_info']:
 
-			if market.received_cmc:
-
-				print("\nCurrent USD Price: $" + market.mk_usd)
-				print("Current Litoshi Price: Ł" + str(market.mk_ltc) + "(litoshis)")
-			
+				print(f"\nCurrent USD Price: ${mk_info['mk_usd']}")
+				print(f"Current Litoshi Price: Ł{mk_info['mk_ltc']} (litoshis)")
+					
 				#print in magenta if it's sub zero else print green. red 2 dark 4 me
-				#using termcolor because colarama required only a string. if i converted it to string i couldnt use the inequality operator
-				if market.h24_change < 0:
-					print(colored("\n24h price change: " + str(market.h24_change) + "%", 'magenta'))
+				if mk_info['h24_change'] < 0:
+					print(Fore.MAGENTA + "\n24h price change: " + str(mk_info['h24_change']) + '%')
 
 				else:
-					print(colored("\n24h price change: " + str(market.h24_change) + "%", 'green'))
+					print(Fore.GREEN + "\n24h price change: " + str(mk_info['h24_change']) + '%')
 
-				print("24h volume: " + str(market.h24_vol))
+				print("24h volume: " + str(mk_info['h24_vol']))
 
-				print("\nCirculating Supply: " + market.c_supply + " TRTL \n")
+				print(f"\nCirculating Supply: {mk_info['c_supply']} TRTL \n")
 			else:
-				print(Fore.RED + "\nCould not retrieve market stats, please try again.\n" + Style.RESET_ALL)
-			continue
+				print(Fore.RED + "\nCould not retrieve market stats, please try again. \n")
 
-		elif inp == commands_2[0] or inp == commands_2[1]:
-			if market.received_cmc:
-				print("\nCirculating Supply: " + market.c_supply + " TRTL \n")
-			else:
-				print(Fore.RED + "\nCould not retrieve supply stats, please try again.\n" + Style.RESET_ALL)
+				continue
 
-			continue
-		
-		elif inp == commands_3[0] or inp == commands_3[1]:
-			if network.received_info:
-				print("\nNetwork block height: " + network.height)
-				print("The current global hashrate is: " + network.hashrate + " MH/s")
-				print("Mining difficulty: " + network.difficulty)
-				print("Client version: " + network.client_version + "\n")
+
+		elif command in supply_commands:
+			mk_info = market()
+			if mk_info['received_info']:
+				print(f"\nCirculating Supply: {mk_info['c_supply']} TRTL \n")
 			else:
-				print(Fore.RED + "\nCould not retrieve network stats, please try again.\n" + Style.RESET_ALL)
+				print(Fore.RED + "\nCould not retrieve market stats, please try again. \n")
+
 			continue
 		
-		elif inp.startswith(commands_4[0]) or inp.startswith(commands_4[1]):
-			price_inp = inp.split()
+		elif command in network_commands:
+			network_info = network()
+
+			if network_info['received_info']:
+
+				print(f"\nNetwork block height: {network_info['height']}")
+				print(f"The current global hashrate is: {network_info['hashrate']} MH/s")
+				print(f"Mining difficulty: {network_info['difficulty']}")
+				print(f"Client version: {network_info['client_version']} \n")
+
+			else:
+				print(Fore.RED + "\nCould not retrieve network stats, please try again. \n")
+
+			continue
+
+
+		elif command.startswith('p') or command.startswith('price'):
 
 			#get out of this conditional if anything other than p or price. needed since first elif needs to take into account the numbers as well, not just the command itself
-			if price_inp[0] != commands_4[0] and price_inp[0] != commands_4[1]:
-				print(Fore.RED + f"\nSorry, command not recognized: {inp}\n" + Style.RESET_ALL)
+			if command not in price_commands:
+				print(Fore.RED + f"\nSorry, command not recognized: {inp}\n")
 				continue
+
+			if command and not command_args: #if command passed true and arent any additional args
+				price_info = price() # get info
+				if price_info['received_info']: # if succesfully received
+
+					print("\nCurrent price: $" + str(price_info['mk_usd']) + " or Ł" + str(price_info['mk_ltc']) + "(litoshis)")
+					print(Fore.YELLOW + " \nYou can also try 'price <amount> to calculate how much your TRTLs are worth. \n")
+
+					continue
 			
-			if market.received_cmc:
-
-				if len(price_inp) < 2:
-					print("\nCurrent price: $" + str(market.mk_usd) + " or Ł" + str(market.mk_ltc) + "(litoshis)")
-					print(Fore.YELLOW + " \nYou can also try 'price <amount> to calculate how much your TRTLs are worth. \n" + Style.RESET_ALL)
 				else:
-					price_in_usd = int(price_inp[1]) * float(market.mk_usd)
-					price_in_ltc = int(price_inp[1]) * market.mk_ltc
+					print(Fore.RED + "\nCould not retrieve price stats, please try again.\n") #couldnt get stats for some reason
 
-					print("\nCurrent price: $" + str(market.mk_usd) + " or Ł" + str(market.mk_ltc) + "(litoshis)")
+					continue
+			else: #there are additional arguments passed
+				command_args = list(map(int, command_args))[0] #convert list item to integer so that it can parse it. and grab it's value with [0]
+				price_info = price(command_args) # get stats
+				if price_info['received_info']: #if response 
+					print("\nCurrent price: $" + str(price_info['mk_usd']) + " or Ł" + str(price_info['mk_ltc']) + "(litoshis)")
 
-					print(str(price_inp[1]) + " TRTL is: $" + str(price_in_usd))
-					print(str(price_inp[1]) + " TRTL is: Ł" + str(price_in_ltc) + "(litoshis)")
+					print(str(command_args) + " TRTL is: $" + str(price_info['price_in_usd']))
+					print(str(command_args) + " TRTL is: Ł" + str(price_info['price_in_ltc']) + "(litoshis)")
 
-			else:
-				print(Fore.RED + "\nCould not retrieve price stats, please try again.\n" + Style.RESET_ALL)
+					continue
+				else:
+					print(Fore.RED + "\nCould not retrieve price stats, please try again.\n") #cudnt get stats for some reason
 
-				continue
+					continue
 
-		elif inp == commands_6[0] or inp == commands_6[1]:
+		elif command in ascii_list_commands:
 			print(msgs.ascii_msg)
 			continue
 
-		elif inp.startswith(commands_5[0]) or inp.startswith(commands_5[1]):
+		elif command.startswith('a') or command.startswith('ascii'):
 
-			ascii_inp = inp.lower().split()
-
-			if ascii_inp[0] != commands_5[0] and ascii_inp[0] != commands_5[1]:
-				print(Fore.RED + f"\nSorry, command not recognized: {inp}\n" + Style.RESET_ALL)
+			if command not in ascii_commands: #once again, check if the thing passed isnt a or ascii
+				print(Fore.RED + f"\nSorry, command not recognized: {inp}\n")
 				continue
 			
-			if len(ascii_inp) <2:
-				rand_number = randint(0, 9)
+			if not command_args: # if it's only a or ascii
+				rand_number = randint(0, 9) #get random number
 
-				print(values(rand_number))
+				print(askee(rand_number)['ascii']) #pass to function which handles it
+
 				
+			else: # there are args for a specific art
+				ascii_art = askee(command_args[0]) # pass it to function
 
-			elif ascii_inp[1] == 'flyingturtle':
-				print(values(0))
+				if ascii_art['file_exists']: # if the filename specified exists
+					print(ascii_art['ascii']) #print it
+				else: #file name dont exist
+					print(Fore.RED + "\nCouldn't find ascii art mentioned, please verify your spelling\n") #error out
 
-			elif ascii_inp[1] == 'happyturtle':
-				print(values(1))
-
-			elif ascii_inp[1] == 'pineapple':
-				print(values(2))
-
-			elif ascii_inp[1] == 'seaturtle':
-				print(values(3))				
-
-			elif ascii_inp[1] == 'snail':
-				print(values(4))				
-
-			elif ascii_inp[1] == 'swanson':
-				print(values(5))				
-
-			elif ascii_inp[1] == 'trtl':
-				print(values(6))
-
-			elif ascii_inp[1] == 'turtle':
-				print(values(7))
-
-			elif ascii_inp[1] == 'turtlefighter':
-				print(values(8))
-			elif ascii_inp[1] == 'walker':
-				print(values(9))
-			else:
-				print(Fore.RED + f"\nCouldn't find ascii art specified: '{ascii_inp[1]}'" + Style.RESET_ALL)
 			continue
 
-		elif inp == commands_7[0] or inp == commands_7[1]:
-			if checkpoints.git_conn:
-				print(f"\nCheckpoints updated {checkpoints.updated} {checkpoints.h_t_s} ago.")
+		elif command in checkpoints_commands:
+			checkpoint_info = checkpoints()
+			if checkpoint_info['received_info']:
+
+				print(f"\nCheckpoints updated {checkpoint_info['updated']} {checkpoint_info['h_t_s']} ago.")
 				print("Download checkpoints from: http://checkpoints.info\n")
+			else:
+				print(Fore.RED + "\nCouldn't receive checkpoint information, please try again \n")
 			continue
 
-		elif inp == commands_8[0] or inp == commands_8[1]:
-			print(msgs.welcome_msg)
+		elif command in license_commands:
+			print(msgs.license_msg)
 			continue
 
-		elif inp == "":
-			continue
-
-		elif inp == "exit" or inp == "e":
-			print(Fore.YELLOW + 'Exiting...' + Style.RESET_ALL)
+		elif command in exit_commands:
+			print(Fore.YELLOW + 'Exiting...')
 			break
 
 		else:
-			print(Fore.RED + f"\nSorry, command not recognized: {inp}\n" + Style.RESET_ALL)
+			print(Fore.RED + f"\nSorry, command not recognized: {inp}\n")
 			continue
 
 except KeyboardInterrupt:
 	running = False
-	print(Fore.YELLOW + ' \n \nShutdown requested, exiting' + Style.RESET_ALL)
+	print(Fore.YELLOW + ' \n \nShutdown requested, exiting')
 
 print('Bye')

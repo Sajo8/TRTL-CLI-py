@@ -21,7 +21,7 @@ version = Fore.YELLOW + """\
   
   TRTL CLI py
   Made by Sajo8
-  Based off of TRTL CLI made by mrrovot and Xaz
+  Based off of TRTL CLI made by mrrovot, zack796, and brandonlehman
 
   Version 1.0.0
 """ + Style.RESET_ALL
@@ -81,7 +81,7 @@ ascii_msg = Fore.YELLOW + """\
 
 license_msg = Fore.YELLOW + """\
   
-  TRTL CLI py  Copyright (C) 2018 Sajo8
+  TRTL CLI py Copyright (C) 2018 Sajo8
   This program comes with ABSOLUTELY NO WARRANTY
   This is free software, and you are welcome to redistribute it
   under certain conditions

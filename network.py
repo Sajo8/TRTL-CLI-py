@@ -1,43 +1,49 @@
 """
-    Copyright (C) 2018 Sajo8
+	Copyright (C) 2018 Sajo8
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import requests
 from colorama import Fore, Style, init
-init() 
+init(autoreset=True)
 
-received_info = True
+def network():
 
-try:
-    get_info = requests.get('http://public.turtlenode.io:11898/getinfo').json()
-except:
-    received_info = False
+	try:
+		print(Fore.YELLOW + "\nReceiving network stats...")
 
-if received_info:
+		network_info = requests.get('http://public.turtlenode.io:11898/getinfo').json()
 
-    height = str(get_info['height'])
+		# grab height
+		height = str(network_info['height'])
 
-    hashrate_kh = get_info['hashrate']
-    hashrate_decimals = hashrate_kh / 1000000 #convert to mhs
-    hashrate = str(round(hashrate_decimals,2)) #round to 2 decimal places
+		#grab hashrate
+		hashrate_kh = network_info['hashrate']
+		hashrate_decimals = hashrate_kh / 1000000 #convert to mhs
+		hashrate = str(round(hashrate_decimals,2)) #round to 2 decimal places
 
-    difficulty_nocomas = get_info['difficulty']
-    difficulty = '{:,}'.format(difficulty_nocomas)
+		# grab diff with  no commas
+		difficulty_nocomas = network_info['difficulty']
+		difficulty = '{:,}'.format(difficulty_nocomas) #add commas
 
-    client_version = str(get_info['version'])
+		client_version = str(network_info['version']) #get client version
 
-else:
-    print(Fore.RED + "\nCould not retrieve network stats." + Style.RESET_ALL)
+		return {'received_info': True, 'height': height, 'hashrate': hashrate, 'difficulty': difficulty, 'client_version': client_version}
+	
+	except:
+		return {'received_info': False}
+
+if __name__ == "__main__":
+	print('\n', network())
