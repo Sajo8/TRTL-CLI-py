@@ -37,4 +37,8 @@ Please do a pull request with any data about trtl that can be useful.
 
 ### Thanks
 
+Thanks to zpalmtree for giving pointers on how to optimize it
+
+### Credits
+
 Thanks to @zack796 and @mrrovot off of whose work this is based on.
