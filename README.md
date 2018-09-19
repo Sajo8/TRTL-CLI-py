@@ -21,6 +21,8 @@ Install the dependencies
 $ pip install colorama termcolor
 ```
 
+**You need Python 3.6+**
+
 ### Initializing
 
 ```sh
