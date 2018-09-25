@@ -8,7 +8,6 @@ Command line interface to check TurtleCoin network status and community activity
 ## Usage
 
 ### Installation
-
 Clone this repository
 
 ```sh
@@ -17,11 +16,11 @@ $ git clone https://github.com/sajo8/trtl-cli-py.git
 
 Install the dependencies
 
-```sh
-$ pip install colorama termcolor
-```
-
 **You need Python 3.6+**
+
+```sh
+$ pip install -r requirements.txt
+```
 
 ### Initializing
 
