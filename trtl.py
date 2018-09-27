@@ -164,17 +164,21 @@ try:
 				rand_number = randint(0, 9) #get random number
 
 				print(askee(rand_number)['ascii']) #pass to function which handles it
-
 				
 			else: # there are args for a specific art
-				ascii_art = askee(command_args[0]) # pass it to function
+				
+				if command_args[0] == 'list':
+					print(msgs.ascii_msg)
+					continue
+				
+				ascii_art = askee(str(command_args[0])) # pass it to function
 
 				if ascii_art['file_exists']: # if the filename specified exists
 					print(ascii_art['ascii']) #print it
 				else: #file name dont exist
 					print(Fore.RED + "\nCouldn't find ascii art mentioned, please verify your spelling\n") #error out
 
-			continue
+				continue
 
 		elif command in checkpoints_commands:
 			checkpoint_info = checkpoints()

@@ -21,14 +21,15 @@ def askee(fileornumber):
 
 	if str(fileornumber).isdigit(): # if it is a number
 		
-		f = open('ascii/' + filenames[fileornumber] + '.txt') #open corresponding file
+		f = open('ascii/' + filenames[fileornumber] + '.txt') #open corresponding file		
 		f_contents = f.read()
 		f.close()
 		return {'ascii': f_contents} # no need to return file_exists or not because we know the random integer passed will be within bounds
 
 	else:
 		try:
-			f = open(filenames['ascii/' + fileornumber + '.txt']) #open file of key with the same name with dir and file type appended to it
+			f = open('ascii/' + fileornumber + '.txt') #open file of key with the same name with dir and file type appended to it
+			
 			f_contents = f.read()
 			f.close()
 			return {'file_exists': True, 'ascii': f_contents} # return file_exists because input passed may not exist
