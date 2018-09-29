@@ -164,6 +164,7 @@ try:
 				rand_number = randint(0, 9) #get random number
 
 				print(askee(rand_number)['ascii']) #pass to function which handles it
+
 				
 			else: # there are args for a specific art
 				

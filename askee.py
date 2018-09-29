@@ -19,8 +19,8 @@ filenames = ['flyingturtle', 'happyturtle', 'pineapple', 'seaturtle', 'snail', '
 
 def askee(fileornumber):
 
-	if str(fileornumber).isdigit(): # if it is a number
-		
+	if str(fileornumber).isdigit() and int(fileornumber) < 10: # if it is a number and less than 10
+
 		f = open('ascii/' + filenames[fileornumber] + '.txt') #open corresponding file		
 		f_contents = f.read()
 		f.close()
@@ -28,11 +28,12 @@ def askee(fileornumber):
 
 	else:
 		try:
-			f = open('ascii/' + fileornumber + '.txt') #open file of key with the same name with dir and file type appended to it
+
+			f = open(f'ascii/{fileornumber}.txt') #open file of key with the same name with dir and file type appended to it
 			
 			f_contents = f.read()
 			f.close()
 			return {'file_exists': True, 'ascii': f_contents} # return file_exists because input passed may not exist
 
-		except KeyError: # file doesnt exist
+		except: # file doesnt exist
 			return {'file_exists': False}
