@@ -21,6 +21,7 @@ from network import network #processes and returns info for commands `n` or `net
 from askee import askee #processes and returns info for commands `a` or `ascii`
 from checkpoints import checkpoints #for c or checkpoints
 from price import price #for p or price
+from nodes import nodes # for nodes stuf
 
 from random import randint # for random ascii art
 from colorama import Fore, Style, init
@@ -39,6 +40,8 @@ price_commands = ['price', 'p']
 ascii_commands = ['ascii', 'a']
 ascii_list_commands = ['ascii list', 'al']
 checkpoints_commands = ['checkpoints', 'c']
+nodes_commands = ['nodes', 'no']
+
 license_commands = ['license', 'l']
 exit_commands = ['exit', 'e']
 
@@ -189,6 +192,12 @@ try:
 				print("Download checkpoints from: http://checkpoints.info\n")
 			else:
 				print(Fore.RED + "\nCouldn't receive checkpoint information, please try again \n")
+			continue
+
+		elif command in nodes_commands:
+			nodes_info = nodes()
+
+			print(nodes_info['table'])
 			continue
 
 		elif command in license_commands:

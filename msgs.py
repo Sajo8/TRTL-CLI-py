@@ -23,7 +23,7 @@ version = Fore.YELLOW + """\
   Made by Sajo8
   Based off of TRTL CLI made by mrrovot, zack796, and brandonlehman
 
-  Version 1.0.0
+  Version 1.1.0
 """ + Style.RESET_ALL
 
 help_msg = Fore.YELLOW + """\
@@ -45,10 +45,11 @@ help_msg = Fore.YELLOW + """\
 	price|p [qty]  Gives current price information
 	ascii|a [pic]  Displays ASCII art
 	ascii list|al  Displays a list of ASCII art
-	checkpoints|c  Gets latest checkpoint update
-	
+	checkpoints|c  Gets latest checkpoint update                                                  
+        nodes|no        Displays a table of available remote nodes
+
 	license|l      Show license information
-  exit|e         Quit the program
+        exit|e         Quit the program
 """ + Style.RESET_ALL
 
 welcome_msg = Fore.GREEN + """\
