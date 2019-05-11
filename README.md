@@ -1,5 +1,7 @@
 # TRTL CLI py
 
+## Moved here: https://github.com/turtlecoin/turtlecoin-cli-py
+
 Command line interface to check TurtleCoin network status and community activity.
 
 ### Version
